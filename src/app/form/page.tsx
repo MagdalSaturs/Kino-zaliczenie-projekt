@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { useState, useEffect } from "react";
 import { Stepper } from "@/components/form/stepper";
 import { StepMovie } from "@/components/form/step-movie";
@@ -22,12 +24,10 @@ export default function FormPage() {
     }
   }, [movieFromQuery]);
 
-
   function handleNext(data: any) {
     setFormData((prev) => ({ ...prev, ...data }));
     setStep(step + 1);
   }
-
 
   return (
     <main className="min-h-screen bg-slate-950 text-slate-50">
@@ -37,36 +37,19 @@ export default function FormPage() {
         <Stepper step={step} />
 
         <div key={step} className="rounded-lg border border-slate-800 p-6 step-enter step-enter-active">
-            {step === 0 && <StepMovie onNext={handleNext} />}
-
-            {step === 1 && (
-                <StepTime
-                onNext={handleNext}
-                onBack={() => setStep(step - 1)}
-                />
-            )}
-
-            {step === 2 && (
-              <StepSeat
-                onNext={handleNext}
-                onBack={() => setStep(step - 1)}
-                />
-              )}
-
-            {step === 3 && (
-                <StepPersonal
-                    onNext={handleNext}
-                    onBack={() => setStep(step - 1)}
-                    />
-                )}
-            {step === 4 && (
-              <StepSummary
-                data={formData}
-                onBack={() => setStep(step - 1)}
-                onConfirm={() => {window.location.href = "/thank-you";}}
-                />
-              )}
-            
+          {step === 0 && <StepMovie onNext={handleNext} />}
+          {step === 1 && <StepTime onNext={handleNext} onBack={() => setStep(step - 1)} />}
+          {step === 2 && <StepSeat onNext={handleNext} onBack={() => setStep(step - 1)} />}
+          {step === 3 && <StepPersonal onNext={handleNext} onBack={() => setStep(step - 1)} />}
+          {step === 4 && (
+            <StepSummary
+              data={formData}
+              onBack={() => setStep(step - 1)}
+              onConfirm={() => {
+                window.location.href = "/thank-you";
+              }}
+            />
+          )}
         </div>
       </div>
     </main>
